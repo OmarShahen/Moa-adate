@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "568745523073",
+    "project_id": "moa-daty",
+    "storage_bucket": "moa-daty.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568745523073:android:4d6ad935f19f3ddb939a80",
+        "android_client_info": {
+          "package_name": "com.agile.heavy_equipments"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHWj0XbxVw3H1rsV35oylRimgrd6zLRmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
