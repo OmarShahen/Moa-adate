@@ -15,7 +15,8 @@ const InputField = ({
     errorMessage,
     multiline=false,
     autoCapitalize,
-    autoCorrect
+    autoCorrect,
+    editable
 }) => {
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(secureTextEntry)
@@ -37,6 +38,7 @@ const InputField = ({
                 multiline={multiline}
                 autoCapitalize={autoCapitalize}
                 autoCorrect={autoCorrect}
+                editable={editable}
                 />
                 {secureTextEntry && (
                     <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)} style={styles.eyeIcon}>
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
     },
     input: {
       flex: 1,
-      paddingVertical: 12,
+      paddingVertical: 16,
       paddingRight: 16,
       fontSize: 16,
       color: '#000',

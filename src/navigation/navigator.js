@@ -14,6 +14,10 @@ import ProfileDetailsScreen from "../screens/Profile"
 import { AuthContext } from "../context/AuthContext"
 import FormsNavigatorScreen from "../screens/admin/Forms-Navigator"
 import CategoriesFormScreen from "../screens/admin/Categories-Form"
+import SubcategoriesFormScreen from "../screens/admin/Subcategories-Form"
+import TypesFormScreen from "../screens/admin/Types-Form"
+import BrandsFormScreen from "../screens/admin/Brand-Form"
+import ModelFormScreen from "../screens/admin/Model-Form"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -87,6 +91,10 @@ const FormNavigatorStack = () => {
         <Stack.Navigator>
             <Stack.Screen name="Form-Navigator" component={FormsNavigatorScreen} options={{ title: 'الادارة' }} />
             <Stack.Screen name="Categories-Form" component={CategoriesFormScreen} options={{ title: 'اضافة فئة' }} />
+            <Stack.Screen name="Subcategories-Form" component={SubcategoriesFormScreen} options={{ title: 'اضافة فئة فرعية' }} />
+            <Stack.Screen name="Types-Form" component={TypesFormScreen} options={{ title: 'اضافة نوع' }} />
+            <Stack.Screen name="Brand-Form" component={BrandsFormScreen} options={{ title: 'اضافة علامة تجارية' }} />
+            <Stack.Screen name="Model-Form" component={ModelFormScreen} options={{ title: 'اضافة موديل' }} />
         </Stack.Navigator>
     )
 }

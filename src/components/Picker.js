@@ -2,7 +2,7 @@ import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { Picker } from "@react-native-picker/picker"
 
-const CustomPicker = ({ label, selectedValue, onValueChange, items, style }) => {
+const CustomPicker = ({ label, selectedValue, onValueChange, items, style, errorMessage, enabled=true }) => {
   return (
     <View style={styles.container}>
         {label && <Text style={styles.label}>{label}</Text>}
@@ -11,19 +11,30 @@ const CustomPicker = ({ label, selectedValue, onValueChange, items, style }) => 
         selectedValue={selectedValue}
         onValueChange={onValueChange}
         style={[styles.picker, style]}
+        enabled={enabled}
+        mode="dropdown"
         >
-            {items.map((item, index) => (
-            <Picker.Item key={index} label={item.label} value={item.value} />
-            ))}
+            <Picker.Item label={label} value="" enabled={false} />
+            {
+              Array.isArray(items) ?
+              items.map((item, index) => (
+              <Picker.Item key={index} label={item.label} value={item.value} />
+              ))
+            :
+              Object.keys(items).map((itemKey, index) => (
+              <Picker.Item key={index} label={items[itemKey]} value={itemKey} />
+              ))
+            }
         </Picker>
         </View>
+        <Text style={styles.errorMessage}>{errorMessage}</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
+    marginBottom: 0,
   },
   label: {
     fontSize: 14,
@@ -41,8 +52,13 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: "100%",
-    color: "#333", // Text color
+    color: "#333", 
   },
+  errorMessage: {
+    color: 'red',
+    textAlign: 'right',
+    fontWeight: 'bold'
+}
 })
 
 export default CustomPicker

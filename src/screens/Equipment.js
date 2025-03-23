@@ -1,14 +1,21 @@
-import React, { useState } from "react"
+import { useEffect, useState } from "react"
 import { View, Text, Image, FlatList, TouchableOpacity, Modal, StyleSheet, ScrollView, Linking } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { BodyText, Title } from "../components/Typography"
 import Layout from "../components/Layout"
 import Spacing from "../components/Spacing"
+import { doc, getDoc } from "firebase/firestore"
+import { ActivityIndicator } from "react-native-paper"
+import { COLORS } from "../components/Colors"
 
 const EquipmentScreen = ({ route }) => {
-  const { equipment } = route.params
+
+  const { id } = route.params
+
+  const [equipment, setEquipment] = useState({})
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const openImage = (image) => {
     setSelectedImage(image)
@@ -19,6 +26,39 @@ const EquipmentScreen = ({ route }) => {
     Linking.openURL(`tel:${equipment.ownerPhone}`)
   }
 
+
+  useEffect(() => {
+
+    const fetchEquipment = async () => {
+
+      try {
+
+        if(!id) {
+          return
+        }
+
+        setIsLoading(true)
+        const docRef = doc(db, 'equipments', id)
+        const docSnap = await getDoc(docRef)
+        setIsLoading(false)
+
+        if(docSnap.exists()) {
+          setEquipment(docSnap.data())
+        } else {
+          alert('لا يوجد معدة')
+        }
+
+      } catch(error) {
+        setIsLoading(false)
+        console.error(error.message)
+        alert(error.message)
+      }
+    }
+
+    fetchEquipment()
+
+  }, [id])
+
   return (
     <Layout>
     <ScrollView 
@@ -26,9 +66,17 @@ const EquipmentScreen = ({ route }) => {
     showsVerticalScrollIndicator={false}
     showsHorizontalScrollIndicator={false}
     >
+      {
+        isLoading ?
+        <View>
+          <Spacing type={'large'} />
+          <ActivityIndicator size={'large'} color={COLORS.PRIMARY} />
+        </View>
+        :
+        <View>
       {/* Image Slider */}
       <FlatList
-        data={equipment.images}
+        data={equipment.imagesURLs ? equipment.imagesURLs : []}
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}
@@ -92,6 +140,9 @@ const EquipmentScreen = ({ route }) => {
         آلة قوية تستخدم في تمهيد الأرض، إزالة الأنقاض، وتسوية التربة في المشاريع الإنشائية.
         </BodyText>
       </View>
+        </View>
+      }
+      
     </ScrollView>
     </Layout>
   )
